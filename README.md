@@ -15,3 +15,10 @@
 
 * 无法访问：http://192.168.243.3/api/v1.banner/getbanner?id={id}
 * 但同时发现可以访问：http://192.168.243.3/api/v1/banner/getbanner/{id}
+
+### 自定义验证器验证（统一校验）
+
+* 使用基类校验统一api控制器下的校验规则
+* 获取http请求参数：用Request的静态方法Request::param()。
+* 各种子类validate面向的是接口需要调用的校验入口，定义校验规则、信息、场景。
+* 基类Validate是所有校验的方法的集合，调用think.Validate的check()方法具体校验。
