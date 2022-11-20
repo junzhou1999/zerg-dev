@@ -38,3 +38,7 @@
 
 * 返回的exception可以自定义message，我们可以把校验的错误信息
 * 作为exception的message。
+
+### 添加model层，负责controller和数据库交互
+
+* 同时加入自定义banner异常
