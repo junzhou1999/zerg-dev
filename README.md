@@ -29,3 +29,7 @@
 * 把全局的异常都作为BaseException的子类（没开启APP_DEBUG的运维环境下）
 * 通过ExceptionHandle把处理方式都统一下来
 * 测试地址：http://192.168.243.3/api/v1/banner/{id}
+
+### 测试参数的批量校验，并返回对应异常信息
+
+* 测试地址：http://192.168.243.3/api/v1/banner/{id}?num={num}

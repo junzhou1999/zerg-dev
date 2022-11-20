@@ -17,9 +17,13 @@ class BaseValidate extends Validate
   public function goCheck() {
     // 获取请求参数
     $params = Request::param();
-    $result = $this->check($params);
+    $result = $this->batch()->check($params);
     if (!$result) {
-      throw new ParameterException();
+      throw new ParameterException([
+        // 批量校验错误的信息可能是个数组
+        "message" => is_array($this->error) ?
+          implode(';', $this->error) : $this->error,
+      ]);
     }
     return true;
   }
