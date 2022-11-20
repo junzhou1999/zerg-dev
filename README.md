@@ -33,3 +33,8 @@
 ### 测试参数的批量校验，并返回对应异常信息
 
 * 测试地址：http://192.168.243.3/api/v1/banner/{id}?num={num}
+
+### Revert上一次commit，不对num进行校验
+
+* 返回的exception可以自定义message，我们可以把校验的错误信息
+* 作为exception的message。
