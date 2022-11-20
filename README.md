@@ -22,3 +22,10 @@
 * 获取http请求参数：用Request的静态方法Request::param()。
 * 各种子类validate面向的是接口需要调用的校验入口，定义校验规则、信息、场景。
 * 基类Validate是所有校验的方法的集合，调用think.Validate的check()方法具体校验。
+
+### 自定义异常处理（统一异常处理）
+
+* 举例通过banner的goCheck()检查参数，然后测试异常
+* 把全局的异常都作为BaseException的子类（没开启APP_DEBUG的运维环境下）
+* 通过ExceptionHandle把处理方式都统一下来
+* 测试地址：http://192.168.243.3/api/v1/banner/{id}

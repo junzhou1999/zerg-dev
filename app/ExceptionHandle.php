@@ -2,12 +2,14 @@
 
 namespace app;
 
+use app\lib\exception\BaseException;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
+use think\facade\Env;
 use think\Response;
 use Throwable;
 
@@ -49,9 +51,24 @@ class ExceptionHandle extends Handle
    * @return Response
    */
   public function render($request, Throwable $e): Response {
-    // 添加自定义异常处理机制
 
-    // 其他错误交给系统处理
-    return parent::render($request, $e);
+    if (Env::get('APP_DEBUG')) {
+      // 其他错误交给系统处理
+      return parent::render($request, $e);
+    }
+    else {
+      // 添加自定义异常处理机制
+      if ($e instanceof BaseException) {
+        $together_message = [
+          'code' => $e->getCode(),
+          'message' => $e->getMessage(),
+          'status_code' => $e->statusCode,
+          'request_url' => $request->url()
+        ];
+        return json($together_message, $e->getCode());
+      }
+
+      throw new BaseException();
+    }
   }
 }
