@@ -2,6 +2,8 @@
 
 namespace app\api\model;
 
+use think\facade\Db;
+
 class Banner
 {
   /**
@@ -10,6 +12,7 @@ class Banner
    * @return
    */
   public static function getBannerByID($id) {
-    return null;
+    $res = Db::query('select * from banner_item where banner_id = ?', [$id]);
+    return $res;
   }
 }

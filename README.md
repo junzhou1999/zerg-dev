@@ -42,3 +42,11 @@
 ### 添加model层，负责controller和数据库交互
 
 * 同时加入自定义banner异常
+
+### BannerModal使用原生sql语句查询数据库
+
+* 数据库：PostgreSQL 12.11
+* 连接数据库需要php-fpm安装pgsql，pdo_pgsql这两个扩展并添加。
+* 并执行规定的pgsql.sql文件
+* 添加连接配置
+* 然后使用facade/Db类库初步进行数据库的原生sql语句查询。

@@ -22,7 +22,7 @@ class Banner
         'message' => '请求banner不存在',
       ]);
     }
-    return $banner;
+    return json($banner);
   }
 
 }
