@@ -62,3 +62,11 @@
 * 构造器where条件：表达式，闭包
 
 ### sql、error日志单独生成
+
+### 使用模型来对表进行查询
+
+* find、select获取数据。https://www.kancloud.cn/manual/think-orm/1258048
+* 模型需要继承Model，默认的类名对应表名，如果自定义，新增table属性
+* 新建一个BannerItemModal:
+* > php think make:model api@BannerItem
+* 模型的使用还是要通过Db层。
