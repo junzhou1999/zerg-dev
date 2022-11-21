@@ -25,7 +25,7 @@ return [
       // 单文件日志写入
       'single' => false,
       // 独立日志级别
-      'apart_level' => [],
+      'apart_level' => ['error', 'sql'],
       // 最大日志文件数量
       'max_files' => 0,
       // 使用JSON格式记录
@@ -34,8 +34,10 @@ return [
       'processor' => null,
       // 关闭通道日志写入
       'close' => false,
+      // 日志时间输出格式化
+      'time_format' => 'm-d H:i:s.u',
       // 日志输出格式化
-      'format' => '[%s][%s] %s',
+      'format' => "[%.18s][%s] %s\n--------------------",
       // 是否实时写入
       'realtime_write' => false,
     ],
