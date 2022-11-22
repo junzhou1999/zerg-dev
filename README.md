@@ -75,3 +75,8 @@
 
 * 使用关联模型对banner、banner_item表查询
 * 请求：http://192.168.243.3/api/v1/banner/1
+
+### 嵌套关联查询
+
+* banner_item跟image表是一对一关联，可以调用：hasOne或者belongsTo对模型关联。
+* 这样的关联属于banner和banner_item之间再嵌套一层image
