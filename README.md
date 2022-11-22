@@ -80,3 +80,5 @@
 
 * banner_item跟image表是一对一关联，可以调用：hasOne或者belongsTo对模型关联。
 * 这样的关联属于banner和banner_item之间再嵌套一层image
+
+### 利用框架模型隐藏不必要的字段给客户端

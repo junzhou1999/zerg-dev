@@ -15,8 +15,7 @@ class Banner
   public function getBanner($id) {
     $validate = new IDValidate();  // 异常检测，相当于拦截器
     $validate->goCheck();
-//    $banner = BannerModel::getBannerByID($id);
-    $banner = BannerModel::with(['items', 'items.img'])->find($id);  // 直接使用模型来查询
+    $banner = BannerModel::getBannerByID($id);
     if (!$banner) {
       throw new MissException([
         'statusCode' => 40000,

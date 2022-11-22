@@ -10,5 +10,5 @@ use think\Model;
  */
 class Image extends Model
 {
-  //
+  protected $visible = ['url'];
 }
