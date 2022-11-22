@@ -7,6 +7,15 @@ use think\Model;
 
 class Banner extends Model
 {
+
+  /**
+   * 1对*关联模型
+   * @return void
+   */
+  public function items() {
+    return $this->hasMany(BannerItem::class, 'banner_id', 'id');
+  }
+
   /**
    * modal获取数据库元组信息
    * @param $id
