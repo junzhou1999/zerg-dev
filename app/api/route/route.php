@@ -6,4 +6,8 @@ use think\facade\Route;
 Route::get(':version/banner/:id', ':version.Banner/getBanner');
 
 // Theme
-Route::get(':version/theme', ':version.Theme/getSimpleList');
+Route::group(':version/theme', function () {
+  Route::get('', ':version.Theme/getSimpleList');
+  Route::get('/:id', ':version.Theme/getComplexOne');
+});
+

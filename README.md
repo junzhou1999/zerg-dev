@@ -102,3 +102,10 @@
 
 * theme表的topic_img（主题栏展示的图片）跟image的一个元组形成1对1，联系属性在theme表。
 * theme表的head_img（点击主题图后展示的头图）跟image的一个元组形成1对1，联系属性在theme表。
+
+### 添加theme跟product之间的查询联系接口
+
+* theme在原来两个img的基础上添加跟products的多对多联系
+* 地址：http://192.168.243.3/api/v1/theme/1
+* 开启路由完全匹配
+* 添加themeController下的路由分组，避免要把复杂的路由定义在前，简单的路由定义在后的麻烦

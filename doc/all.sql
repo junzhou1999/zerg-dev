@@ -1,33 +1,26 @@
 create database db_zergdev encoding 'UTF-8';
 
 drop table if exists banner;
-drop sequence if exists SEQ_BANNER;
-
-create sequence SEQ_BANNER as bigint
-    start 2;
 create table banner
 (
-    "id"          bigint not null default nextval('seq_banner'),
-    "name"        varchar(50)     default null,
-    "description" varchar(255)    default null,
-    "delete_time" int             default null,
-    "update_time" int             default null,
+    "id"          serial not null,
+    "name"        varchar(50)  default null,
+    "description" varchar(255) default null,
+    "delete_time" int          default null,
+    "update_time" int          default null,
     primary key ("id")
 );
 comment on column banner.name is 'banner名称，通常作为标识';
 comment on column banner.description is 'banner描述';
 comment on table banner is 'banner管理表';
+
 insert into banner
 values ('1', '首页置顶', '首页轮播图', null, null);
 
 drop table if exists banner_item;
-drop sequence if exists SEQ_BANNER_ITEM;
-
-create sequence SEQ_BANNER_ITEM as bigint
-    start 6;
 create table banner_item
 (
-    "id"          bigint       not null default nextval('SEQ_BANNER_ITEM'),
+    "id"          serial       not null,
     "img_id"      int          not null,
     "key_word"    varchar(100) not null,
     "type"        int          not null default '1',
@@ -52,16 +45,12 @@ insert into "banner_item"
 values ('5', '1', '10', '1', null, '1', null);
 
 
-drop sequence if exists image;
-drop table if exists SEQ_IMAGE;
-
-create sequence SEQ_IMAGE as bigint
-    start 70;
+drop table if exists image;
 create table image
 (
-    "id"          bigint       not null default nextval('SEQ_IMAGE'),
+    "id"          serial       not null,
     "url"         varchar(255) not null,
-    "from"        int          not null default '1',
+    "from"        boolean      not null default '1',
     "delete_time" int                   default null,
     "update_time" int                   default null,
     primary key ("id")
@@ -195,20 +184,16 @@ values ('69', '/product-vg@3.png', '1', null, null);
 
 
 -- Theme表
-drop sequence if exists SEQ_THEME;
 drop table if exists theme;
-
-create sequence SEQ_THEME as bigint
-    start 4;
-create table "theme"
+create table theme
 (
-    "id"           bigint      not null default nextval('SEQ_THEME'),
+    "id"           serial      not null,
     "name"         varchar(50) not null,
-    "description"  varchar(255)         default null,
+    "description"  varchar(255) default null,
     "topic_img_id" int         not null,
-    "delete_time"  int                  default null,
+    "delete_time"  int          default null,
     "head_img_id"  int         not null,
-    "update_time"  int                  default null,
+    "update_time"  int          default null,
     primary key ("id")
 );
 comment on column theme.name is '专题名称';
@@ -223,3 +208,145 @@ insert into "theme"
 values ('2', '专题栏位二', '新品推荐', '17', null, '50', null);
 insert into "theme"
 values ('3', '专题栏位三', '做个干物女', '18', null, '18', null);
+
+
+-- 产品信息表
+drop table if exists product;
+create table product
+(
+    "id"           serial        not null,
+    "name"         varchar(80)   not null,
+    "price"        decimal(6, 2) not null,
+    "stock"        int           not null default '0',
+    "delete_time"  int                    default null,
+    "category_id"  int                    default null,
+    "main_img_url" varchar(255)           default null,
+    "from"         boolean       not null default '1',
+    "create_time"  int                    default null,
+    "update_time"  int                    default null,
+    "summary"      varchar(50)            default null,
+    "img_id"       int                    default null,
+    primary key ("id")
+);
+comment on column product.name is '商品名称';
+comment on column product.price is '价格,单位：分';
+comment on column product.stock is '库存量';
+comment on column product.main_img_url is '主图ID号，这是一个反范式设计，有一定的冗余';
+comment on column product.from is '图片来自 1 本地 ，2公网';
+comment on column product.create_time is '创建时间';
+comment on column product.summary is '摘要';
+comment on column product.img_id is '图片外键';
+comment on table product is '产品信息表';
+
+insert into "product"
+values ('1', '芹菜 半斤', '0.01', '998', null, '3', '/product-vg@1.png', '1', null, null, null, '13');
+insert into "product"
+values ('2', '梨花带雨 3个', '0.01', '984', null, '2', '/product-dryfruit@1.png', '1', null, null, null, '10');
+insert into "product"
+values ('3', '素米 327克', '0.01', '996', null, '7', '/product-rice@1.png', '1', null, null, null, '31');
+insert into "product"
+values ('4', '红袖枸杞 6克*3袋', '0.01', '998', null, '6', '/product-tea@1.png', '1', null, null, null, '32');
+insert into "product"
+values ('5', '春生龙眼 500克', '0.01', '995', null, '2', '/product-dryfruit@2.png', '1', null, null, null, '33');
+insert into "product"
+values ('6', '小红的猪耳朵 120克', '0.01', '997', null, '5', '/product-cake@2.png', '1', null, null, null, '53');
+insert into "product"
+values ('7', '泥蒿 半斤', '0.01', '998', null, '3', '/product-vg@2.png', '1', null, null, null, '68');
+insert into "product"
+values ('8', '夏日芒果 3个', '0.01', '995', null, '2', '/product-dryfruit@3.png', '1', null, null, null, '36');
+insert into "product"
+values ('9', '冬木红枣 500克', '0.01', '996', null, '2', '/product-dryfruit@4.png', '1', null, null, null, '37');
+insert into "product"
+values ('10', '万紫千凤梨 300克', '0.01', '996', null, '2', '/product-dryfruit@5.png', '1', null, null, null, '38');
+insert into "product"
+values ('11', '贵妃笑 100克', '0.01', '994', null, '2', '/product-dryfruit-a@6.png', '1', null, null, null, '39');
+insert into "product"
+values ('12', '珍奇异果 3个', '0.01', '999', null, '2', '/product-dryfruit@7.png', '1', null, null, null, '40');
+insert into "product"
+values ('13', '绿豆 125克', '0.01', '999', null, '7', '/product-rice@2.png', '1', null, null, null, '41');
+insert into "product"
+values ('14', '芝麻 50克', '0.01', '999', null, '7', '/product-rice@3.png', '1', null, null, null, '42');
+insert into "product"
+values ('15', '猴头菇 370克', '0.01', '999', null, '7', '/product-rice@4.png', '1', null, null, null, '43');
+insert into "product"
+values ('16', '西红柿 1斤', '0.01', '999', null, '3', '/product-vg@3.png', '1', null, null, null, '69');
+insert into "product"
+values ('17', '油炸花生 300克', '0.01', '999', null, '4', '/product-fry@1.png', '1', null, null, null, '44');
+insert into "product"
+values ('18', '春泥西瓜子 128克', '0.01', '997', null, '4', '/product-fry@2.png', '1', null, null, null, '45');
+insert into "product"
+values ('19', '碧水葵花籽 128克', '0.01', '999', null, '4', '/product-fry@3.png', '1', null, null, null, '46');
+insert into "product"
+values ('20', '碧螺春 12克*3袋', '0.01', '999', null, '6', '/product-tea@2.png', '1', null, null, null, '47');
+insert into "product"
+values ('21', '西湖龙井 8克*3袋', '0.01', '998', null, '6', '/product-tea@3.png', '1', null, null, null, '48');
+insert into "product"
+values ('22', '梅兰清花糕 1个', '0.01', '997', null, '5', '/product-cake-a@3.png', '1', null, null, null, '54');
+insert into "product"
+values ('23', '清凉薄荷糕 1个', '0.01', '998', null, '5', '/product-cake-a@4.png', '1', null, null, null, '55');
+insert into "product"
+values ('25', '小明的妙脆角 120克', '0.01', '999', null, '5', '/product-cake@1.png', '1', null, null, null, '52');
+insert into "product"
+values ('26', '红衣青瓜 混搭160克', '0.01', '999', null, '2', '/product-dryfruit@8.png', '1', null, null, null, '56');
+insert into "product"
+values ('27', '锈色瓜子 100克', '0.01', '998', null, '4', '/product-fry@4.png', '1', null, null, null, '57');
+insert into "product"
+values ('28', '春泥花生 200克', '0.01', '999', null, '4', '/product-fry@5.png', '1', null, null, null, '58');
+insert into "product"
+values ('29', '冰心鸡蛋 2个', '0.01', '999', null, '7', '/product-rice@5.png', '1', null, null, null, '59');
+insert into "product"
+values ('30', '八宝莲子 200克', '0.01', '999', null, '7', '/product-rice@6.png', '1', null, null, null, '14');
+insert into "product"
+values ('31', '深涧木耳 78克', '0.01', '999', null, '7', '/product-rice@7.png', '1', null, null, null, '60');
+insert into "product"
+values ('32', '土豆 半斤', '0.01', '999', null, '3', '/product-vg@4.png', '1', null, null, null, '66');
+insert into "product"
+values ('33', '青椒 半斤', '0.01', '999', null, '3', '/product-vg@5.png', '1', null, null, null, '67');
+
+drop table if exists theme_product;
+create table theme_product
+(
+    "theme_id"   int not null,
+    "product_id" int not null,
+    primary key ("theme_id", "product_id")
+);
+comment on column theme_product.theme_id is '主题外键';
+comment on column theme_product.product_id is '商品外键';
+comment on table theme_product is '主题所包含的商品';
+
+insert into "theme_product"
+values ('1', '2');
+insert into "theme_product"
+values ('1', '5');
+insert into "theme_product"
+values ('1', '8');
+insert into "theme_product"
+values ('1', '10');
+insert into "theme_product"
+values ('1', '12');
+insert into "theme_product"
+values ('2', '1');
+insert into "theme_product"
+values ('2', '2');
+insert into "theme_product"
+values ('2', '3');
+insert into "theme_product"
+values ('2', '5');
+insert into "theme_product"
+values ('2', '6');
+insert into "theme_product"
+values ('2', '16');
+insert into "theme_product"
+values ('2', '33');
+insert into "theme_product"
+values ('3', '15');
+insert into "theme_product"
+values ('3', '18');
+insert into "theme_product"
+values ('3', '19');
+insert into "theme_product"
+values ('3', '27');
+insert into "theme_product"
+values ('3', '30');
+insert into "theme_product"
+values ('3', '31');

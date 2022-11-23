@@ -4,6 +4,7 @@ namespace app\api\controller\v1;
 
 use app\api\model\Theme as ThemeModel;
 use app\api\validate\IDCollectionValidate;
+use app\api\validate\IDValidate;
 use app\lib\exception\ThemeException;
 
 class Theme
@@ -26,5 +27,20 @@ class Theme
       throw new ThemeException();
     }
     return json($res);
+  }
+
+  /**
+   * @url /theme/:id
+   * @param $id
+   * @return theme列表
+   */
+  public function getComplexOne($id) {
+    $validate = new IDValidate();
+    $validate->goCheck();
+
+    $theme = ThemeModel::getThemeWithProducts($id);
+    if (!$theme)
+      throw new ThemeException();
+    return json($theme);
   }
 }
