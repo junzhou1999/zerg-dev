@@ -2,10 +2,7 @@
 
 namespace app\api\model;
 
-//use app\api\model\Banner as BannerModel;
-use think\Model;
-
-class Banner extends Model
+class Banner extends BaseModel
 {
   // 不显示字段给客户端
   protected $hidden = ['delete_time', 'update_time'];

@@ -3,15 +3,12 @@ declare (strict_types=1);
 
 namespace app\api\model;
 
-use think\facade\Config;
-use think\Model;
-
 /**
  * @mixin \think\Model
  */
-class Image extends Model
+class Image extends BaseModel
 {
-  protected $visible = ['url'];
+  protected $hidden = ['id', 'delete_time', 'update_time', 'from'];
 
   /**
    * 获取器
@@ -20,9 +17,6 @@ class Image extends Model
    * @return string
    */
   public function getUrlAttr($value, $data) {
-    if ($data['from'] == 1)
-      return Config::get('setting.img_prefix') . $value;
-    return $value;
-
+    return $this->prefixImgUrl($value, $data);
   }
 }
