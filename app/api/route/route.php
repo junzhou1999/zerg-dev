@@ -2,4 +2,4 @@
 
 use think\facade\Route;
 
-Route::get('v1/banner/:id', 'v1.Banner/getBanner');
+Route::get(':version/banner/:id', ':version.Banner/getBanner');
