@@ -192,3 +192,34 @@ insert into "image"
 values ('68', '/product-vg@2.png', '1', null, null);
 insert into "image"
 values ('69', '/product-vg@3.png', '1', null, null);
+
+
+-- Theme表
+drop sequence if exists SEQ_THEME;
+drop table if exists theme;
+
+create sequence SEQ_THEME as bigint
+    start 4;
+create table "theme"
+(
+    "id"           bigint      not null default nextval('SEQ_THEME'),
+    "name"         varchar(50) not null,
+    "description"  varchar(255)         default null,
+    "topic_img_id" int         not null,
+    "delete_time"  int                  default null,
+    "head_img_id"  int         not null,
+    "update_time"  int                  default null,
+    primary key ("id")
+);
+comment on column theme.name is '专题名称';
+comment on column theme.description is '专题描述';
+comment on column theme.topic_img_id is '主题图';
+comment on column theme.head_img_id is '专题列表页，头图';
+comment on table theme is '主题信息表';
+
+insert into "theme"
+values ('1', '专题栏位一', '美味水果世界', '16', null, '49', null);
+insert into "theme"
+values ('2', '专题栏位二', '新品推荐', '17', null, '50', null);
+insert into "theme"
+values ('3', '专题栏位三', '做个干物女', '18', null, '18', null);
