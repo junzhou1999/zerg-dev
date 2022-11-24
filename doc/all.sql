@@ -350,3 +350,32 @@ insert into "theme_product"
 values ('3', '30');
 insert into "theme_product"
 values ('3', '31');
+
+drop table if exists category;
+create table category
+(
+    "id"           serial      not null,
+    "name"         varchar(50) not null,
+    "topic_img_id" int          default null,
+    "delete_time"  int          default null,
+    "description"  varchar(100) default null,
+    "update_time"  int          default null,
+    primary key ("id")
+);
+comment on column category.name is '分类名称';
+comment on column category.topic_img_id is '外键，关联image表';
+comment on column category.description is '描述';
+comment on table category is '商品类目';
+
+insert into "category"
+values ('2', '果味', '6', null, null, null);
+insert into "category"
+values ('3', '蔬菜', '5', null, null, null);
+insert into "category"
+values ('4', '炒货', '7', null, null, null);
+insert into "category"
+values ('5', '点心', '4', null, null, null);
+insert into "category"
+values ('6', '粗茶', '8', null, null, null);
+insert into "category"
+values ('7', '淡饭', '9', null, null, null);

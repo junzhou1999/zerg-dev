@@ -119,3 +119,7 @@
 
 * 地址：http://192.168.243.3/api/v1/product/recent?count={count}
 * Postgres数据库order by desc会把null值放前面
+
+### 添加访问所有分类的接口
+
+* 地址：http://192.168.243.3/api/v1/category/all

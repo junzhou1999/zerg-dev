@@ -14,3 +14,6 @@ Route::group(':version/theme', function () {
 // Product
 Route::get(':version/product/recent', ':version.Product/getRecent');
 
+// Category
+Route::get(':version/category/all', ':version.Category/getAllCategories');
+
