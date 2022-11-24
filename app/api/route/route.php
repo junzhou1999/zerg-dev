@@ -11,3 +11,6 @@ Route::group(':version/theme', function () {
   Route::get('/:id', ':version.Theme/getComplexOne');
 });
 
+// Product
+Route::get(':version/product/recent', ':version.Product/getRecent');
+

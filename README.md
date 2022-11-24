@@ -113,4 +113,9 @@
 ### product表的合理数据冗余
 
 * 查询product信息之后经常要用到img_url字段
-* 需要查询product信息的数量是不可控的 
+* 需要查询product信息的数量是不可控的
+
+### 添加最近新品接口
+
+* 地址：http://192.168.243.3/api/v1/product/recent?count={count}
+* Postgres数据库order by desc会把null值放前面
