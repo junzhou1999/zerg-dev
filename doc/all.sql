@@ -379,3 +379,20 @@ insert into "category"
 values ('6', '粗茶', '8', null, null, null);
 insert into "category"
 values ('7', '淡饭', '9', null, null, null);
+
+
+drop table if exists wechat_user;
+create table wechat_user
+(
+    "id"          serial      not null,
+    "openid"      varchar(50) not null,
+    "nickname"    varchar(50)  default null,
+    "extend"      varchar(255) default null,
+    "delete_time" int          default null,
+    "create_time" int          default null,
+    "update_time" int          default null,
+    primary key ("id"),
+    constraint openid unique ("openid")
+);
+comment on column wechat_user.create_time is '注册时间';
+comment on table wechat_user is '微信用户表';

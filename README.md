@@ -129,3 +129,11 @@
 
 * 地址：http://192.168.243.3/api/v1/product/by-category?id={id}
 * REST基于资源跟模型，那么选择基于product模型来获取分类下的商品
+
+### 创建用于获取小程序用户登录的openid接口
+
+* common.php：定义全局的方法调用
+* 用户向服务器发送code，服务器调用微信登录服务器获取用户对应的openid
+* code用post的body的raw方式传输
+* json_decode：对JSON格式的字符串进行解码
+* empty()：它用于确定变量是否存在，并且变量的值没有评估为false。

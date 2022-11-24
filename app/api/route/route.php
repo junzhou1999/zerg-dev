@@ -18,3 +18,5 @@ Route::get(':version/product/by-category', ':version.Product/getAllInCategory');
 // Category
 Route::get(':version/category/all', ':version.Category/getAllCategories');
 
+// Token
+Route::post(':version/token/user', ':version.Token/getToken');
