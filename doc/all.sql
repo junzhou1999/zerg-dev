@@ -471,3 +471,28 @@ insert into "product_property"
 values ('7', '净含量', '100g', '2', null, null);
 insert into "product_property"
 values ('8', '保质期', '10天', '2', null, null);
+
+
+drop table if exists user_address;
+create table user_address
+(
+    "id"          serial      not null,
+    "name"        varchar(30) not null,
+    "mobile"      varchar(20) not null,
+    "province"    varchar(20)  default null,
+    "city"        varchar(20)  default null,
+    "country"     varchar(20)  default null,
+    "detail"      varchar(100) default null,
+    "delete_time" int          default null,
+    "user_id"     int         not null,
+    "update_time" int          default null,
+    primary key ("id"),
+    constraint "user_id" unique ("user_id")
+);
+comment on column user_address.name is '收获人姓名';
+comment on column user_address.mobile is '手机号';
+comment on column user_address.province is '省';
+comment on column user_address.city is '市';
+comment on column user_address.country is '区';
+comment on column user_address.detail is '详细地址';
+comment on column user_address.user_id is '外键';

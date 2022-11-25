@@ -21,3 +21,6 @@ Route::get(':version/category/all', ':version.Category/getAllCategories');
 
 // Token
 Route::post(':version/token/user', ':version.Token/getToken');
+
+// Address
+Route::post(':version/address', ':version.Address/createOrUpdateAddress');

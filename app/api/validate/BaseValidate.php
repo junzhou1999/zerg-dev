@@ -17,7 +17,7 @@ class BaseValidate extends Validate
   public function goCheck() {
     // 获取请求参数
     $params = Request::param();
-    $result = $this->check($params);
+    $result = $this->batch()->check($params);
     if (!$result) {
       throw new ParameterException([
         // 批量校验错误的信息可能是个数组
@@ -39,5 +39,20 @@ class BaseValidate extends Validate
     if (empty($value))
       return false;
     return true;
+  }
+
+  public function getDataByRule($arrays) {
+    if (array_key_exists('user_id', $arrays) |
+      array_key_exists('uid', $arrays)) {
+      // 不允许包含user_id或者uid，防止恶意覆盖user_id外键
+      throw new ParameterException([
+        'message' => '参数中包含有非法的参数名user_id或者uid'
+      ]);
+    }
+    $newArray = [];
+    foreach ($this->rule as $key => $value) {
+      $newArray[$key] = $arrays[$key];  // 只获取经过校验的参数值
+    }
+    return $newArray;
   }
 }
