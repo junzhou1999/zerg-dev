@@ -396,3 +396,78 @@ create table wechat_user
 );
 comment on column wechat_user.create_time is '注册时间';
 comment on table wechat_user is '微信用户表';
+
+
+drop table if exists product_image;
+create table product_image
+(
+    "id"            serial not null,
+    "img_id"        int    not null,
+    "delete_time"   int             default null,
+    "product_order" int    not null default '0',
+    "product_id"    int    not null,
+    primary key ("id")
+);
+comment on column product_image.img_id is '外键，关联图片表';
+comment on column product_image.delete_time is '状态，主要表示是否删除，也可以扩展其他状态';
+comment on column product_image.product_order is '图片排序序号';
+comment on column product_image.product_id is '商品id，外键';
+
+insert into "product_image"
+values ('4', '19', null, '1', '11');
+insert into "product_image"
+values ('5', '20', null, '2', '11');
+insert into "product_image"
+values ('6', '21', null, '3', '11');
+insert into "product_image"
+values ('7', '22', null, '4', '11');
+insert into "product_image"
+values ('8', '23', null, '5', '11');
+insert into "product_image"
+values ('9', '24', null, '6', '11');
+insert into "product_image"
+values ('10', '25', null, '7', '11');
+insert into "product_image"
+values ('11', '26', null, '8', '11');
+insert into "product_image"
+values ('12', '27', null, '9', '11');
+insert into "product_image"
+values ('13', '28', null, '11', '11');
+insert into "product_image"
+values ('14', '29', null, '10', '11');
+insert into "product_image"
+values ('18', '62', null, '12', '11');
+insert into "product_image"
+values ('19', '63', null, '13', '11');
+
+drop table if exists product_property;
+create table product_property
+(
+    "id"          serial       not null,
+    "name"        varchar(30) default '',
+    "detail"      varchar(255) not null,
+    "product_id"  int          not null,
+    "delete_time" int         default null,
+    "update_time" int         default null,
+    primary key ("id")
+);
+comment on column product_property.name is '详情属性名称';
+comment on column product_property.detail is '详情属性';
+comment on column product_property.product_id is '商品id，外键';
+
+insert into "product_property"
+values ('1', '品名', '杨梅', '11', null, null);
+insert into "product_property"
+values ('2', '口味', '青梅味 雪梨味 黄桃味 菠萝味', '11', null, null);
+insert into "product_property"
+values ('3', '产地', '火星', '11', null, null);
+insert into "product_property"
+values ('4', '保质期', '180天', '11', null, null);
+insert into "product_property"
+values ('5', '品名', '梨子', '2', null, null);
+insert into "product_property"
+values ('6', '产地', '金星', '2', null, null);
+insert into "product_property"
+values ('7', '净含量', '100g', '2', null, null);
+insert into "product_property"
+values ('8', '保质期', '10天', '2', null, null);

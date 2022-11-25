@@ -39,4 +39,19 @@ class Product
     $products = $products->hidden(['summary'], true);
     return json($products);
   }
+
+  /**
+   * @url /product/:id
+   * @param $id
+   * @return void
+   */
+  public function getOne($id) {
+    (new IDValidate())->goCheck();
+
+    $product = ProductModal::getProductDetail($id);
+    if (!$product) {
+      throw new ProductException();
+    }
+    return json($product);
+  }
 }

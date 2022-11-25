@@ -25,4 +25,23 @@ class Product extends BaseModel
       ->select();
     return $products;
   }
+
+  public static function getProductDetail($id) {
+//    $product = self::with(['imgs.imgUrl' ,'properties']);
+    $product = self::with([
+      'imgs' => function ($query) {  // 使用闭包查询ProductImage中间表下的url以及对其排序
+        $query->with('imgUrl')
+          ->order('product_order', 'asc');
+      }, 'properties'])
+      ->find($id);
+    return $product;
+  }
+
+  public function imgs() {
+    return $this->hasMany(ProductImage::class, 'product_id', 'id');
+  }
+
+  public function properties() {
+    return $this->hasMany(ProductProperty::class, 'product_id', 'id');
+  }
 }

@@ -141,3 +141,10 @@
 ### 完善登录令牌的获取
 
 * 从小程序正确获取到openid后，整合wxresult, openid, uid存在redis缓存中
+
+### 编写商品详情接口
+
+* 地址：http://192.168.243.3/api/v1/product/{id}
+* 返回商品详细信息以及介绍图片
+* 使用闭包在商品信息下的product_img再对其与image表的一对一关系进行处理获取图片URL
+* "order"、"user"在postgres里面是关键字
