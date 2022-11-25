@@ -57,4 +57,14 @@ class Token
     return false;
   }
 
+  // 用户专有权限
+  public static function needExclusicveScope() {
+    $scope = self::getCurrentTokenVar('scope');
+    if (!$scope)
+      throw new TokenException();
+    if ($scope != ScopeEnum::USER)
+      throw new ForbiddenException();
+    return false;
+  }
+
 }

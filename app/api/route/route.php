@@ -24,3 +24,7 @@ Route::post(':version/token/user', ':version.Token/getToken');
 
 // Address
 Route::post(':version/address', ':version.Address/createOrUpdateAddress');
+
+// order
+Route::post(':version/order', ':version.Order/placeOrder');
+
