@@ -137,3 +137,7 @@
 * code用post的body的raw方式传输
 * json_decode：对JSON格式的字符串进行解码
 * empty()：它用于确定变量是否存在，并且变量的值没有评估为false。
+
+### 完善登录令牌的获取
+
+* 从小程序正确获取到openid后，整合wxresult, openid, uid存在redis缓存中
