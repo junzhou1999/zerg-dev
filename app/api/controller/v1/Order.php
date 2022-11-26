@@ -3,6 +3,7 @@
 namespace app\api\controller\v1;
 
 use app\api\middleware\CheckExclusiveScope;
+use app\api\validate\OrderPlace;
 
 class Order
 {
@@ -16,6 +17,8 @@ class Order
    * 下单
    */
   public function placeOrder() {
+    (new OrderPlace())->goCheck();
+
     return "success";
   }
 }

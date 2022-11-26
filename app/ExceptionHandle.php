@@ -68,6 +68,7 @@ class ExceptionHandle extends Handle
         return json($together_message, $e->getCode());
       }
 
+      // goCheck如果是系统内置的校验的规则，会走到这里
       throw new BaseException();
     }
   }
