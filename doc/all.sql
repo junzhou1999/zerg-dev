@@ -496,3 +496,52 @@ comment on column user_address.city is '市';
 comment on column user_address.country is '区';
 comment on column user_address.detail is '详细地址';
 comment on column user_address.user_id is '外键';
+
+
+drop table if exists app_order;
+create table app_order
+(
+    "id"           serial        not null,
+    "order_no"     varchar(20)   not null,
+    "user_id"      int           not null,
+    "delete_time"  int                    default null,
+    "create_time"  int                    default null,
+    "total_price"  decimal(6, 2) not null,
+    "status"       smallint      not null default '1',
+    "snap_img"     varchar(255)           default null,
+    "snap_name"    varchar(80)            default null,
+    "total_count"  int           not null default '0',
+    "update_time"  int                    default null,
+    "snap_items"   text,
+    "snap_address" varchar(500)           default null,
+    "prepay_id"    varchar(100)           default null,
+    primary key ("id"),
+    constraint order_no unique ("order_no")
+);
+create index on app_order using btree (user_id);
+comment on column app_order.order_no is '订单号';
+comment on column app_order.user_id is '外键，用户id，注意并不是openid';
+comment on column app_order.order_no is '订单号';
+comment on column app_order.status is '1:未支付， 2：已支付，3：已发货 , 4: 已支付，但库存不足';
+comment on column app_order.snap_img is '订单快照图片';
+comment on column app_order.snap_name is '订单快照名称';
+comment on column app_order.snap_name is '订单快照名称';
+comment on column app_order.snap_name is '订单快照名称';
+comment on column app_order.snap_items is '订单其他信息快照（json)';
+comment on column app_order.snap_address is '地址快照';
+comment on column app_order.prepay_id is '订单微信支付的预订单id（用于发送模板消息）';
+
+
+drop table if exists order_product;
+create table appOrder_product
+(
+    "order_id"    int not null,
+    "product_id"  int not null,
+    "count"       int not null,
+    "delete_time" int default null,
+    "update_time" int default null,
+    primary key ("product_id", "order_id")
+);
+comment on column appOrder_product.order_id is '联合主键，订单id';
+comment on column appOrder_product.product_id is '联合主键，商品id';
+comment on column appOrder_product.count is '商品数量';

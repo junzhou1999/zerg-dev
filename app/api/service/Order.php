@@ -2,15 +2,18 @@
 
 namespace app\api\service;
 
+use app\api\model\AppOrder as OrderModel;
+use app\api\model\OrderProduct;
 use app\api\model\Product as ProductModel;
 use app\api\model\UserAddress as UserAddressModel;
 use app\lib\exception\OrderException;
 use app\lib\exception\WechatUserException;
+use think\Exception;
 
 class Order
 {
   protected $oProducts;    // 客户端传进来的商品信息
-  protected $productsDb;   // 真实的商品信息
+  protected $productsDb;   // 根据客户端传来的productID，查询数据库真实的商品信息
   protected $uid;          // 用户id
 
   public function place($uid, $oProducts) {
@@ -20,12 +23,59 @@ class Order
 
     $status = $this->getOrderStatus();
     if (!$status['pass']) {
-      $status['oeder_id'] = -1;
+      $status['order_id'] = -1;
       return $status;
     }
 
-    // 开始创建订单
+    // 开始创建订单...
+
+    // 写入快照表
     $orderSnap = $this->snapOrder($status);
+    // 写入order和order_product
+    $status = $this->createOrder($orderSnap);
+    $status['pass'] = true;
+    return $status;
+
+
+  }
+
+  /**
+   * 把订单信息写入到order以及order和product之间的联系order_product
+   * @param $snap
+   * @return array
+   * @throws Exception
+   */
+  private function createOrder($snap) {
+    try {
+      $orderNo = $this::makeOrderNo();
+      $order = new OrderModel();
+      $order->user_id = $this->uid;
+      $order->order_no = $orderNo;
+      $order->total_price = $snap['orderPrice'];
+      $order->total_count = $snap['totalCount'];
+      $order->snap_img = $snap['snapImg'];
+      $order->snap_name = $snap['snapName'];
+      $order->snap_address = $snap['snapAddress'];
+      $order->snap_items = json_encode($snap['pStatus']);
+      $order->save();   // order表保存这一条订单信息
+
+      $orderID = $order->id;
+      $create_time = $order->create_time;  // 显示在订单详情的时间里
+
+      foreach ($this->oProducts as &$p) {
+        $p['order_id'] = $orderID;
+      }
+      $orderProduct = new OrderProduct();
+      $orderProduct->saveall($this->oProducts);  // order_product保存order和product的多对多属性
+
+      return [
+        'order_no' => $orderNo,
+        'order_id' => $orderID,
+        'create_time' => $create_time
+      ];
+    } catch (Exception $e) {
+      throw $e;
+    }
   }
 
   /**
@@ -78,7 +128,7 @@ class Order
    * 判断订单可支付状态
    */
   private function getOrderStatus() {
-    // 二维数组
+    // 一维数组，计算下单商品的汇总
     $status = [
       'pass' => true,       // 订单总的可支付状态
       'order_price' => 0,   // 订单总价格
@@ -87,13 +137,14 @@ class Order
     ];
     foreach ($this->oProducts as $product) {
       // 获取每个订单商品支付状态
-      $pStatus = $this->getProductStatus($product['product_id'],
-        $product['count'], $this->productsDb);
+      $pStatus =
+        $this->getProductStatus($product['product_id'], $product['count'], $this->productsDb);
       // 一个商品没有库存的话，订单失效
       if (!$pStatus['haveStock'])
-        $pStatus['pass'] = false;
+        $status['pass'] = false;
       $status['order_price'] += $pStatus['totalPrice'];
       $status['totalCount'] += $pStatus['count'];
+      // 每个商品的信息
       array_push($status['pStatusArray'], $pStatus);
     }
     return $status;
@@ -117,8 +168,9 @@ class Order
       'totalPrice' => 0
     ];
 
+    // 遍历数据库查到的商品信息，如果订单发起的product_id不存在于前边的结果集，则抛出异常
     for ($i = 0; $i < count($productsDb); $i++) {
-      // 判断商品库存量
+      // 客户端传递的productID有可能根本不存在
       if ($oPID == $productsDb[$i]['id']) {
         $pIndex = $i;
         break;
@@ -156,6 +208,18 @@ class Order
       ->visible(['id', 'name', 'price', 'stock', 'main_img_url'])
       ->toArray();   // 查询到的模型转成数组
     return $products;
+  }
+
+  /**
+   * 生成订单编号
+   */
+  public static function makeOrderNo() {
+    $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+    $orderSn =
+      $yCode[intval(date('Y')) - 2022] . strtoupper(dechex(date('m'))) . date(
+        'd') . substr(time(), -5) . substr(microtime(), 2, 5) . sprintf(
+        '%02d', rand(0, 99));
+    return $orderSn;
   }
 
 }

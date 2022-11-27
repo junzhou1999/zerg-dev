@@ -3,6 +3,7 @@
 namespace app\api\controller\v1;
 
 use app\api\middleware\CheckExclusiveScope;
+use app\api\service\Order as OrderService;
 use app\api\service\Token as TokenService;
 use app\api\validate\OrderPlace;
 
@@ -21,6 +22,8 @@ class Order
     (new OrderPlace())->goCheck();
     $products = input('post.products/a');  // 获取body的所有products
     $uid = TokenService::getCurrentTokenVar('uid');
-    return "success";
+    $service = new OrderService();
+    $status = $service->place($uid, $products);
+    return json($status);
   }
 }
