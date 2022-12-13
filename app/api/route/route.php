@@ -30,6 +30,8 @@ Route::post(':version/token/user', ':version.Token/getToken');
 
 // Address
 Route::post(':version/address', ':version.Address/createOrUpdateAddress');
+Route::get(':version/address', ':version.Address/getUserAddress');
+Route::delete(':version/address', ':version.Address/deleteUserAddress');
 
 // order
 Route::post(':version/order', ':version.Order/placeOrder');

@@ -3,6 +3,7 @@
 namespace app\api\controller\v1;
 
 use app\api\middleware\CheckPrimaryScope;
+use app\api\model\UserAddress;
 use app\api\model\WechatUser as UserModel;
 use app\api\service\Token as TokenService;
 use app\api\validate\AddressNew;
@@ -13,8 +14,27 @@ class Address
 {
   // 使用中间件
   protected $middleware = [
-    CheckPrimaryScope::class => ['only' => ['createOrUpdateAddress']],
+    CheckPrimaryScope::class => ['only' => ['createOrUpdateAddress', 'deleteAddress']],
   ];
+
+
+  /**
+   * 获取用户地址信息
+   * @return UserAddress
+   * @throws UserException
+   */
+  public function getUserAddress() {
+    $uid = TokenService::getCurrentUid();
+    $userAddress = UserAddress::where('user_id', $uid)
+      ->find();
+    if (!$userAddress) {
+      throw new WechatUserException([
+        'message' => '用户地址不存在',
+        'statusCode' => 60001
+      ]);
+    }
+    return json($userAddress);
+  }
 
   /**
    * @url /address
@@ -48,6 +68,22 @@ class Address
       $user->address->save($data);
     }
     return json(new SuccessMessage(), 201);
+  }
+
+  public function deleteUserAddress() {
+    $uid = TokenService::getCurrentUid();
+    $userAddress = UserAddress::where('user_id', $uid)
+      ->find();
+    if (!$userAddress) {
+      throw new WechatUserException([
+        'message' => '用户地址不存在',
+        'statusCode' => 60001
+      ]);
+    }
+    $userAddress->delete();
+    return json(new SuccessMessage([
+      'code' => 200
+    ]));
   }
 
 }
