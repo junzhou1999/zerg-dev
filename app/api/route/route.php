@@ -12,9 +12,15 @@ Route::group(':version/theme', function () {
 });
 
 // Product
-Route::get(':version/product/recent', ':version.Product/getRecent');
-Route::get(':version/product/by-category', ':version.Product/getAllInCategory');
-Route::get(':version/product/:id', ':version.Product/getOne');  // 不分组的话就把复杂的放前面
+//Route::get(':version/product/recent', ':version.Product/getRecent');
+//Route::get(':version/product/by-category', ':version.Product/getAllInCategory');
+//Route::get(':version/product/:id', ':version.Product/getOne');  // 不分组的话就把复杂的放前面
+Route::group(':version/product', function () {
+  Route::get('/by-category', ':version.Product/getAllInCategory');
+  Route::get('/by-name/:name', ':version.Product/getByName');
+  Route::get('/recent', ':version.Product/getRecent');
+  Route::get('/:id', ':version.Product/getOne');
+});
 
 // Category
 Route::get(':version/category/all', ':version.Category/getAllCategories');

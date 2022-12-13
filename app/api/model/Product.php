@@ -44,4 +44,11 @@ class Product extends BaseModel
   public function properties() {
     return $this->hasMany(ProductProperty::class, 'product_id', 'id');
   }
+
+  public static function getProductByName($name) {
+    $products = self::whereRaw('name ~* :name', ['name' => $name])
+      ->limit(20)
+      ->select();
+    return $products;
+  }
 }

@@ -5,6 +5,7 @@ namespace app\api\controller\v1;
 use app\api\model\Product as ProductModal;
 use app\api\validate\Count;
 use app\api\validate\IDValidate;
+use app\api\validate\ProdName;
 use app\lib\exception\ProductException;
 
 class Product
@@ -53,5 +54,16 @@ class Product
       throw new ProductException();
     }
     return json($product);
+  }
+
+  public function getByName($name) {
+    (new ProdName())->goCheck();
+    $products = ProductModal::getProductByName($name);
+    if (!$products) {
+      throw new ProductException([
+        'message' => '暂无此商品哦！'
+      ]);
+    }
+    return json($products);
   }
 }
