@@ -27,6 +27,7 @@ Route::get(':version/category/all', ':version.Category/getAllCategories');
 
 // Token
 Route::post(':version/token/user', ':version.Token/getToken');
+Route::post(':version/token/verify', ':version.Token/verifyToken');
 
 // Address
 Route::post(':version/address', ':version.Address/createOrUpdateAddress');
