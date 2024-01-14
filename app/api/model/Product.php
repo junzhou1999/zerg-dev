@@ -31,7 +31,7 @@ class Product extends BaseModel
     $product = self::with([
       'imgs' => function ($query) {  // 使用闭包查询ProductImage中间表下的url以及对其排序
         $query->with('imgUrl')
-          ->order('product_order', 'asc');
+          ->order('order', 'asc');
       }, 'properties'])
       ->find($id);
     return $product;

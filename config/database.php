@@ -22,17 +22,17 @@ return [
   'connections' => [
     'mysql' => [
       // 数据库类型
-      'type' => env('database.type', 'pgsql'),
+      'type' => env('database.type', 'mysql'),
       // 服务器地址
       'hostname' => env('database.hostname', '127.0.0.1'),
       // 数据库名
-      'database' => env('database.database', 'db_zergdev'),
+      'database' => env('database.database', 'db_shop'),
       // 用户名
       'username' => env('database.username', 'root'),
       // 密码
-      'password' => env('database.password', '123456'),
+      'password' => env('database.password', '123'),
       // 端口
-      'hostport' => env('database.hostport', '5432'),
+      'hostport' => env('database.hostport', '3306'),
       // 数据库连接参数
       'params' => [],
       // 数据库编码默认采用utf8
