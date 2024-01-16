@@ -2,7 +2,7 @@
 
 namespace app\api\service;
 
-use app\api\model\WechatUser as UserModel;
+use app\api\model\User as UserModel;
 use app\lib\enum\ScopeEnum;
 use app\lib\exception\TokenException;
 use app\lib\exception\WechatException;

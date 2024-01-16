@@ -2,7 +2,7 @@
 
 namespace app\api\model;
 
-class WechatUser extends BaseModel
+class User extends BaseModel
 {
   public function address() {
     return $this->hasOne(UserAddress::class, 'user_id', 'id');

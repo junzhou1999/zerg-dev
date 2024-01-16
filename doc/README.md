@@ -200,3 +200,8 @@
 
 ### 迁移到MYSQL5.7数据库
 * 修正一些错误查询
+
+### 修正用户地址获取
+* 注意迁移到新环境中要配置appid,app_secret(config/wx.php)以便wx.login调用
+* 还要配置好数据库，缓存（config/cache.php）数据库（config/database.php）
+* 这次的commit纯属自己玩

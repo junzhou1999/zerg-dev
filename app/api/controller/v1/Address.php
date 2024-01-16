@@ -4,7 +4,7 @@ namespace app\api\controller\v1;
 
 use app\api\middleware\CheckPrimaryScope;
 use app\api\model\UserAddress;
-use app\api\model\WechatUser as UserModel;
+use app\api\model\User as UserModel;
 use app\api\service\Token as TokenService;
 use app\api\validate\AddressNew;
 use app\lib\exception\SuccessMessage;
