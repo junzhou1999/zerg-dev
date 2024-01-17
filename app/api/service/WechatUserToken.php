@@ -66,27 +66,6 @@ class WechatUserToken extends Token
     return $this->saveToCache($cachedValue);
   }
 
-  /**
-   * 把令牌跟用户信息放到缓存里
-   * @param $cachedValue
-   * @return string
-   * @throws TokenException
-   * @throws \Psr\SimpleCache\InvalidArgumentException
-   */
-  private function saveToCache($cachedValue) {
-    // 生成令牌
-    $token = self::make_token();
-    $value = json_encode($cachedValue);
-    // 过期时间在配置文件
-    $result = Cache::store('redis')->set($token, $value);
-    if (!$result) {
-      throw new TokenException([
-        'message' => '服务器缓存异常！',
-        'statusCode' => 10005,
-      ]);
-    }
-    return $token;
-  }
 
   /**
    * 整合session_key,openid,uid,scope

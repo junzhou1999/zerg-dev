@@ -214,3 +214,7 @@
 
 ### 添加cms端配置文件
 * 访问地址：ip:port/pages/index.html
+
+### 开发cms登录接口
+* 校验
+* 接口->service->model检查数据库->service存进缓存
