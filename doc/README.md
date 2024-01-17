@@ -211,3 +211,6 @@
 ### 添加服务端配置文件
 
 ### 添加cms端
+
+### 添加cms端配置文件
+* 访问地址：ip:port/pages/index.html
