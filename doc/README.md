@@ -205,3 +205,5 @@
 * 注意迁移到新环境中要配置appid,app_secret(config/wx.php)以便wx.login调用
 * 还要配置好数据库，缓存（config/cache.php）数据库（config/database.php）
 * 这次的commit纯属自己玩
+
+### 修正like查询

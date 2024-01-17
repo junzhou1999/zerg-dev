@@ -46,9 +46,10 @@ class Product extends BaseModel
   }
 
   public static function getProductByName($name) {
-    $products = self::whereRaw('name ~* :name', ['name' => $name])
-      ->limit(20)
-      ->select();
+      $products = self::whereLike('name', '%'.$name.'%')
+        ->limit(20)
+        ->select();
+
     return $products;
   }
 }
