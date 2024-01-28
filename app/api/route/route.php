@@ -35,6 +35,9 @@ Route::post(':version/address', ':version.Address/createOrUpdateAddress');
 Route::get(':version/address', ':version.Address/getUserAddress');
 Route::delete(':version/address', ':version.Address/deleteUserAddress');
 
-// order
+// 下单
 Route::post(':version/order', ':version.Order/placeOrder');
 
+// 前端展示路由
+Route::get(':version/order/by_user', ':version.Order/getSummaryByUser');
+Route::get(':version/order/:id', ':version.Order/getDetail',[], ['id'=>'\d+']);
