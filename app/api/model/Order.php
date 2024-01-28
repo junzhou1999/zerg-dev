@@ -31,11 +31,11 @@ class Order extends BaseModel
         return $pagingData ;
     }
 
-//    public static function getSummaryByPage($page=1, $size=20){
-//        $pagingData = self::order('create_time desc')
-//            ->paginate($size, true, ['page' => $page]);
-//        return $pagingData ;
-//    }
+    public static function getSummaryByPage($page=1, $size=20){
+        $pagingData = self::order('create_time desc')
+            ->paginate(['page'=>$page, 'list_rows'=>$size], true);
+        return $pagingData ;
+    }
 
     public function products()
     {
