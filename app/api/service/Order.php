@@ -6,6 +6,7 @@ use app\api\model\AppOrder as OrderModel;
 use app\api\model\OrderProduct;
 use app\api\model\Product as ProductModel;
 use app\api\model\UserAddress as UserAddressModel;
+use app\lib\enum\OrderStatusEnum;
 use app\lib\exception\OrderException;
 use app\lib\exception\WechatUserException;
 use think\Exception;
@@ -220,6 +221,28 @@ class Order
         'd') . substr(time(), -5) . substr(microtime(), 2, 5) . sprintf(
         '%02d', rand(0, 99));
     return $orderSn;
+  }
+
+  // 发货服务
+  public function delivery($orderID, $jumpPage = '')
+  {
+    $order = OrderModel::where('id', $orderID)->find();
+    if (!$order) {
+      throw new OrderException();
+    }
+    if ($order->status != OrderStatusEnum::PAID) {
+      throw new OrderException([
+          'message' => '还没付款呢，想干嘛？或者你已经更新过订单了，不要再刷了',
+          'statusCode' => 80002,
+          'code' => 403
+      ]);
+    }
+    $order->status = OrderStatusEnum::DELIVERED;
+    $order->save();
+//            ->update(['status' => OrderStatusEnum::DELIVERED]);
+//    $message = new DeliveryMessage();
+//    return $message->sendDeliveryMessage($order, $jumpPage);
+    return true;
   }
 
 }

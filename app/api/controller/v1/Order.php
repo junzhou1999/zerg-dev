@@ -11,6 +11,7 @@ use app\api\validate\IDValidate;
 use app\api\validate\OrderPlace;
 use app\api\validate\PagingParameter;
 use app\lib\exception\OrderException;
+use app\lib\exception\SuccessMessage;
 
 class Order
 {
@@ -107,4 +108,15 @@ class Order
         'data' => $data
     ]);
   }
+
+  // 发货接口
+  public function delivery($id){
+    (new IDValidate())->goCheck();
+    $order = new OrderService();
+    $success = $order->delivery($id);
+    if($success){
+      return new SuccessMessage();
+    }
+  }
+
 }

@@ -8,6 +8,7 @@ $(function(){
     $(".desktop-main div").eq(0).show().siblings().hide();
     var pageIndex = 1;
     moreDataFlag = true;
+    getOrders(pageIndex);
 
     // 列表切换
     $(".desktop-menu ul li").click(function () {
@@ -16,15 +17,9 @@ $(function(){
             $(this).siblings().children("a").removeClass("active");
 
             // 右侧desktop-main box显示不同的内容
-            const index = $(this).index();
-            switchMenu(index);
+            $(".desktop-main div").eq($(this).index()).show().siblings().hide();
+
         })
-
-    function switchMenu(menuIndex) {
-      $(".desktop-main div").eq(menuIndex).show().siblings().hide();
-
-      if (menuIndex == 2) getOrders(pageIndex);
-    }
 
     /*
     * 获取数据 分页
@@ -47,7 +42,7 @@ $(function(){
 
     /*拼接html字符串*/
     function getOrderHtmlStr(res){
-        var data = res.data;
+        var data = res.data.data;
         if (data){
             var len = data.length,
                 str = '', item;
