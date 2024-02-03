@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>特产商城－管理系统</title>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="css/index/index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="banner-wrapper">
+        <div class="logo">
+            <img src="imgs/logo.png">
+            <div class="logo-word">
+                <div>特产商城</div>
+                <div>Specialty Products Mall</div>
+            </div>
+        </div>
+        <div class="left-box">
+            <a class="register" id="login-out" title="退出">退出</a>
+        </div>
+    </div>
+    <div class="desktop-all-box">
+        <section class="desktop">
+            <div class="desktop-menu">
+<!--                <span class="menu-ele" data-url="pages/welcome.html">欢迎</span>-->
+                <span class="menu-ele" data-url="pages/admin.html">管理员用户</span>
+            </div>
+            <iframe id="iframe-box"></iframe>
+        </section>
+    </div>
+    <div class="global-tips">
+        <p></p>
+    </div>
+</body>
+<script type="text/javascript">
+  [].forEach.call(document.querySelectorAll('.menu-ele'), function(v, i){
+    v.addEventListener('click', function () {
+      document.querySelector('#iframe-box').src = this.getAttribute('data-url');
+      [].forEach.call(document.querySelectorAll('.menu-ele'), function(v2, i2){
+        v2.removeAttribute('selected');
+      });
+      this.setAttribute('selected', 'selected')
+    });
+  });
+  document.querySelector('.menu-ele').click();
+</script>
+<script src="js/common.js" type="application/javascript"></script>
+<script src="js/jquery-3.7.1.min.js" type="application/javascript"></script>
+<script src="js/index.js" type="application/javascript"></script>
+</html>
