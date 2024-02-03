@@ -235,3 +235,7 @@
 ### 尝试重构CMS前端
 * 使用gridManager表格组件
 * 右侧栏iframe显示左边栏选择的选项
+
+### 新建admin应用
+* 命令php think build admin
+* URL:admin/hello
