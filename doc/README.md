@@ -239,3 +239,7 @@
 ### 新建admin应用
 * 命令php think build admin
 * URL:admin/hello
+
+### 后端开放查询管理员用户接口
+* 管理员用户不多，只做简单的limit查询
+* CMS部分需要迁移到admin应用
