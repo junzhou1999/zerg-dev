@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\middleware;
+namespace app\admin\middleware;
 
 class CORS
 {
