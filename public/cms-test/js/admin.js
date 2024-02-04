@@ -2,7 +2,7 @@ $(function(){
   var params = {
     url:'/user',
     // data:{},
-    // tokenFlag:true,
+    tokenFlag:true,
     sCallback:function(res) {
       $('table').GM({
         gridManagerName: 'admin_user',

@@ -7,3 +7,6 @@ Route::get('hello','Index/index');
 Route::group('/user', function(){
   Route::get('', 'ThirdApp/getAll');  // 查看管理员用户列表
 });
+
+// 获取token
+Route::post('/token/app', 'Token/getThirdAppToken');

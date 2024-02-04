@@ -248,3 +248,5 @@
 * 使用gridManager插件，使用原生表格渲染需要时间，pass
 
 ### 跨域仅限于admin应用
+
+### 把CMS登录接口移到admin应用

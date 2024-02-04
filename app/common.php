@@ -27,3 +27,11 @@ function curl_get($url, &$httpCode = 0) {
 function get_config($key) {
   return Config::get($key);
 }
+
+///// 把token业务提到全局
+//生成一个不会重复的字符串
+function make_token() {
+  $str = md5(uniqid(md5(microtime(true)), true));
+  $str = sha1($str); //加密
+  return $str;
+}

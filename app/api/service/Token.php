@@ -11,13 +11,6 @@ use think\facade\Request;
 
 class Token
 {
-  //生成一个不会重复的字符串
-  public static function make_token() {
-    $str = md5(uniqid(md5(microtime(true)), true));
-    $str = sha1($str); //加密
-    return $str;
-  }
-
   /**
    * @param $key 通过指定key获取token信息里面的值
    * @return void
@@ -86,7 +79,7 @@ class Token
      */
     protected function saveToCache($cachedValue) {
         // 生成令牌
-        $token = self::make_token();
+        $token = make_token();
         $value = json_encode($cachedValue);
         // 过期时间在配置文件
         $result = Cache::store()->set($token, $value);
