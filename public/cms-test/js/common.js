@@ -1,5 +1,5 @@
 window.base={
-    g_restUrl:'http://192.168.0.85/api/v1/',
+    g_restUrl:'http://192.168.0.85/admin',
 
     getData:function(params){
         if(!params.type){
