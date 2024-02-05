@@ -4,35 +4,49 @@ $(function(){
     // data:{},
     tokenFlag:true,
     sCallback:function(res) {
-      $('table').GM({
-        gridManagerName: 'admin_user',
-        height: '100%',
-
-        ajaxData : res,
-        columnData: [{
-          key: 'app_id',
-          remind: '管理员名称',
-          width: '100px',
-          text: '用户名',
-          sorting: 'DESC'
-        },{
-          key: 'app_description',
-          remind: '用户描述',
-          text: '描述说明',
-          sorting: ''
-        },{
-          key: 'update_time',
-          remind: 'the lastDate',
-          text: '最后修改时间',
-          template: function(lastDate, rowObject){
-            return new Date(lastDate).format('YYYY-MM-DD HH:mm:ss');
-          }
-        }]
-      });
+      initTable(res);
     }
   };
-  window.base.getData(params),
 
+  // 获取数据
+  window.base.getData(params)
+
+  // 初始化表格
+  function initTable(data){
+    var table = document.querySelector('table');
+    table.GM({
+      gridManagerName: 'admin_user',
+      height: '100%',
+      ajaxData: data,
+      supportDrag: false,
+      columnData: [{
+        key: 'app_id',
+        remind: '管理员名称',
+        width: '100px',
+        text: '用户名',
+        sorting: 'DESC'
+      }, {
+        key: 'app_description',
+        remind: '用户描述',
+        text: '描述说明',
+        sorting: ''
+      }, {
+        key: 'update_time',
+        remind: 'the lastDate',
+        text: '最后修改时间',
+        template: function (lastDate, rowObject) {
+          return new Date(lastDate).format('YYYY-MM-DD HH:mm:ss');
+        }
+      }, {
+        key: 'action',
+        text: '操作',
+        // 渲染按钮
+        template: function (action, rowObject) {
+          return '<span class="action-btn modify" data-id="'+rowObject.id+'">编辑</span><span class="action-btn del" data-id="'+rowObject.id+'">删除</span>'
+        }
+      }]
+    });
+  }
 
   // 日期格式化,不是插件的代码,只用于处理时间格式化
   Date.prototype.format = function(fmt){
@@ -57,4 +71,18 @@ $(function(){
     }
     return fmt;
   }
+
+  // 用jquery的点击事件调用
+  $(document).on('click','.modify',function(){
+    var $this=$(this);
+    var id = $this.attr('data-id')
+    console.log(id)
+  })
+
+  $(document).on('click','.del',function(){
+    var $this=$(this);
+    var id = $this.attr('data-id')
+      console.log(id)
+  })
+
 })

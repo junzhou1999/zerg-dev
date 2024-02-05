@@ -1,0 +1,52 @@
+html, body{
+    overflow-x:hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.grid-main {
+    height: calc(100vh - 27px);
+}
+
+.plugin-action{
+    display: inline-block;
+    color: steelblue;
+    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.plugin-action:hover{
+    text-decoration: underline;
+}
+
+.bottom-bar{
+    background: #f8f8f8;
+    padding: 10px;
+    margin-top: 10px;
+}
+.bottom-bar button{
+    padding: 5px 20px;
+    margin-right: 10px;
+}
+.bottom-bar a{
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.table-wrap .table-div table tbody tr td .action-btn{
+    padding: 4px 15px;
+    border-radius: 2px;
+    color: white;
+    background-color: #E97F3C;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+.table-wrap .table-div table tbody tr td .action-btn.modify{
+    background-color: #1677ff;
+}
+
+
+.table-wrap .table-div table tbody tr td .action-btn.del{
+    background-color: #ff4d4f;
+    margin-left: 10px;
+}
