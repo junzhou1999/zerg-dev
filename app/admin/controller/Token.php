@@ -8,6 +8,7 @@ use app\admin\validate\ThirdAppTokenGet;
 class Token
 {
 
+  public $noCheckScope = ['getThirdAppToken'];
   /**
    * 对第三方应用比如cms这些应用的登录处理
    * @param $ac
