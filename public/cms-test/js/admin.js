@@ -1,10 +1,9 @@
 $(function(){
   var params = {
-    url:'/user',
-    // data:{},
+    url:'user',
     tokenFlag:true,
     sCallback:function(res) {
-      initTable(res);
+      InitTable(res);
     }
   };
 
@@ -12,8 +11,8 @@ $(function(){
   window.base.getData(params)
 
   // 初始化表格
-  function initTable(data){
-    var table = document.querySelector('table');
+  var table = document.querySelector('table');
+  function InitTable(data) {
     table.GM({
       gridManagerName: 'admin_user',
       height: '100%',
@@ -81,8 +80,33 @@ $(function(){
 
   $(document).on('click','.del',function(){
     var $this=$(this);
-    var id = $this.attr('data-id')
-      console.log(id)
+    var id = $this.attr('data-id');
+    var params = {
+      url:'user',
+      type:'delete',
+      data:{id:id},
+      tokenFlag:true,
+      sCallback:function(res) {
+        //2出现在首位
+        if(res.code.toString().indexOf('2')==0){
+          // 查询，重新渲染
+          RefreshTable();
+          window.alert("操作成功");
+        }
+      },
+      eCallback:function(){
+        window.alert("操作失败");
+      }
+    };
+    window.base.getData(params);
   })
+
+  // 查询，渲染
+  function RefreshTable(){
+    params.sCallback = function (res){
+      GM.setAjaxData('admin_user', res)
+    }
+    window.base.getData(params)
+  }
 
 })
