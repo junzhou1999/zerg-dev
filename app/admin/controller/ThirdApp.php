@@ -14,6 +14,6 @@ class ThirdApp
 
     if(!$adminUsers)  throw new MissException();
 
-    return Result::success($adminUsers, sizeof($adminUsers));
+    return Result::success($adminUsers);
   }
 }

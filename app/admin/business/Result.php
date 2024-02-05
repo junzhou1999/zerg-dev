@@ -4,13 +4,13 @@ namespace app\admin\business;
 
 class Result
 {
-  public static function success($data, $total)
+  public static function success($data)
   {
     $rs = [
       'code' => 200,
       'msg' => "success",
       'data' => $data,
-      'total' => $total
+      'total' => sizeof($data)
     ];
     return json($rs);
   }
