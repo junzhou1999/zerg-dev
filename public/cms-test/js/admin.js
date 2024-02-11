@@ -109,4 +109,7 @@ $(function(){
     window.base.getData(params)
   }
 
+  $(document).on('click','.new-action', function (){
+    console.log("新增元素")
+  })
 })
