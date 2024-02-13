@@ -11,3 +11,8 @@ Route::group('/user', function(){
 
 // 获取token
 Route::post('/token/app', 'Token/getThirdAppToken');
+
+Route::group('/order', function(){
+  Route::get('paginate', 'Order/getSummary');  // 获取订单列表
+});
+
