@@ -1,0 +1,79 @@
+html, body{
+    overflow-x:hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.grid-main {
+    height: calc(100vh - 27px);
+}
+
+.plugin-action{
+    display: inline-block;
+    color: steelblue;
+    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.plugin-action:hover{
+    text-decoration: underline;
+}
+
+.bottom-bar{
+    background: #f8f8f8;
+    padding: 10px;
+    margin-top: 10px;
+}
+.bottom-bar button{
+    padding: 5px 20px;
+    margin-right: 10px;
+}
+.bottom-bar a{
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+/*订单标志样式*/
+.table-wrap .table-div table tbody tr td .order-status-txt {
+    padding: 4px 8px;
+    border-radius: 2px;
+    color: white;
+    background-color: #333333;
+}
+
+.table-wrap .table-div table tbody tr td .order-status-txt.unpay {
+    background-color: #B42F2D;
+}
+.table-wrap .table-div table tbody tr td .order-status-txt.payed {
+    background-color: #AB956D;
+}
+.table-wrap .table-div table tbody tr td .order-status-txt.done {
+    background-color: #57AB53;
+}
+
+/*订单操作*/
+.table-wrap .table-div table tbody tr td .action-btn{
+    padding: 4px 15px;
+    border-radius: 2px;
+    color: white;
+    background-color: #333333;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+.table-wrap .table-div table tbody tr td .action-btn.payed{
+    background-color: #AB956D;
+}
+.table-wrap .table-div table tbody tr td .action-btn.done{
+    background-color: initial;
+    box-shadow: initial;
+    color: initial;
+    cursor: initial;
+}
+
+.table-wrap .table-div table tbody tr td .action-btn.unstock{
+    background-color: #B42F2D;
+}
+
+.table-wrap .table-div table tbody tr td .action-btn.hover{
+    box-shadow: 0 0 6px #000000;
+}
