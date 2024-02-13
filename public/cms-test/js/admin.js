@@ -72,13 +72,13 @@ $(function(){
   }
 
   // 用jquery的点击事件调用
-  $(document).on('click','.modify',function(){
+  $(document).on('click','action-btn.modify',function(){
     var $this=$(this);
     var id = $this.attr('data-id')
     console.log(id)
   })
 
-  $(document).on('click','.del',function(){
+  $(document).on('click','action-btn.del',function(){
     var $this=$(this);
     var id = $this.attr('data-id');
     var params = {
