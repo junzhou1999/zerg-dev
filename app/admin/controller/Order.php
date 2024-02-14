@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use app\admin\business\Result;
 use app\admin\validate\PagingParameter;
 use app\admin\model\Order as OrderModel;
+use app\admin\validate\SortFiledValidate;
 
 class Order
 {
@@ -18,6 +19,7 @@ class Order
   public function getSummary($page=1, $size = 20, $sort_create_time = '', $sort_status = ''){
     // 验证
     (new PagingParameter())->goCheck();
+    (new SortFiledValidate())->goCheck();
 
     // order排序跟分页查询
     $orderStr = 'create_time DESC,status ASC';

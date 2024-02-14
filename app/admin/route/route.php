@@ -12,7 +12,10 @@ Route::group('/user', function(){
 // 获取token
 Route::post('/token/app', 'Token/getThirdAppToken');
 
+// 订单
 Route::group('/order', function(){
   Route::get('paginate', 'Order/getSummary');  // 获取订单列表
 });
 
+//媒体文件
+Route::get('/media/paginate', 'Media/getAll');
