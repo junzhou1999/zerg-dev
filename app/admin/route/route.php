@@ -24,3 +24,8 @@ Route::get('/media/paginate', 'Media/getAll');
 Route::group('/product', function(){
   Route::get('paginate', 'Product/getAll');
 });
+
+// 分类表
+Route::group('/category', function(){
+  Route::get('paginate', 'Category/getAll');
+});
