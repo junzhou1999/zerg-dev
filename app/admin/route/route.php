@@ -19,3 +19,8 @@ Route::group('/order', function(){
 
 //媒体文件
 Route::get('/media/paginate', 'Media/getAll');
+
+// 商品信息
+Route::group('/product', function(){
+  Route::get('paginate', 'Product/getAll');
+});
