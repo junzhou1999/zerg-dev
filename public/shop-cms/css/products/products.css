@@ -33,6 +33,50 @@ html, body{
     margin-right: 10px;
 }
 
+/*顶栏搜索*/
+.top-area{
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background: #efefef;
+    margin-bottom: 15px;
+}
+
+.top-area .top-ele{
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 12px;
+}
+
+.top-area .top-ele .se-title{
+    display: inline-block;
+    margin-right: 10px;
+}
+.top-area .top-ele .se-con{
+    display: inline-block;
+    width:180px;
+    height: 24px;
+    border: 1px solid #ccc;
+    padding: 0 4px;
+    line-height: 24px;
+}
+
+.top-area .top-ele .search-action{
+    display: inline-block;
+    width:80px;
+    height: 26px;
+    border: 1px solid #ccc;
+    background: #e8e8e8;
+    padding: 0 4px;
+    line-height: 26px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.top-area .top-ele .search-action:hover{
+    opacity: 0.7;
+}
+
 /*操作*/
 .table-wrap .table-div table tbody tr td .action-btn{
     padding: 4px 15px;

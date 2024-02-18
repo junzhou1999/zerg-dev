@@ -129,6 +129,11 @@ $(function(){
     // 设置变量，js不能像php那样的kv数组
     modalTitle.textContent = recordData.find(item => item.id == id).name+' 的属性';
     modal.show();
+  });
+
+  $(document).on('click','.search-action',function(){
+    console.log("点击了搜索按钮。");
+
   })
 
 })
