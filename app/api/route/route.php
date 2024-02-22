@@ -33,7 +33,8 @@ Route::post(':version/token/verify', ':version.Token/verifyToken');
 // Address
 Route::post(':version/address', ':version.Address/createOrUpdateAddress');
 Route::get(':version/address', ':version.Address/getUserAddress');
-Route::delete(':version/address', ':version.Address/deleteUserAddress');
+Route::get(':version/address/:id', ':version.Address/getUserAddressById');
+Route::delete(':version/address/:id', ':version.Address/deleteUserAddress');
 
 // 下单
 Route::post(':version/order', ':version.Order/placeOrder');
