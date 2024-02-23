@@ -70,6 +70,21 @@ class Token
     }
   }
 
+  /**
+   * 当前操作是否为本身用户
+   * @return bool
+   */
+  public static function isValidateOperate($checkedUID){
+    if(!$checkedUID){
+      throw new Exception('检查UID时必须传入一个被检查的UID');
+    }
+    $currentOperateUID = self::getCurrentUid();
+    if($currentOperateUID == $checkedUID){
+      return true;
+    }
+    return false;
+  }
+
     /**
      * 把令牌跟用户信息放到缓存里
      * @param $cachedValue
