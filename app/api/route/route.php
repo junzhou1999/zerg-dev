@@ -39,6 +39,9 @@ Route::delete(':version/address/:id', ':version.Address/deleteUserAddress');
 // 下单
 Route::post(':version/order', ':version.Order/placeOrder');
 
+// 获取订单预支付信息
+Route::post(':version/pay/pre_order', ':version.Pay/getPreOrder');
+
 // 前端展示路由
 Route::get(':version/order/by_user', ':version.Order/getSummaryByUser');
 Route::get(':version/order/:id', ':version.Order/getDetail')->pattern(['id'=>'\d+']);
