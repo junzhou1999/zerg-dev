@@ -3,6 +3,7 @@
 namespace app\api\service;
 
 use think\Exception;
+use app\api\service\Order as OrderService;
 
 class Pay
 {
@@ -19,7 +20,10 @@ class Pay
   }
 
   // 支付的主方法
-  public function pay(){
+  public function pay($orderID){
+
+    $orderService = new OrderService();
+    $status = $orderService->checkOrderStock($orderID);
 
   }
 

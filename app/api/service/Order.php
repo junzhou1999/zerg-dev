@@ -145,7 +145,7 @@ class Order
    * 判断订单可支付状态
    */
   private function getOrderStatus() {
-    // 一维数组，计算下单商品的汇总
+    // 一维数组，计算所有多个下单商品的汇总
     $status = [
       'pass' => true,       // 订单总的可支付状态
       'orderPrice' => 0,   // 订单总价格
@@ -153,7 +153,7 @@ class Order
       'pStatusArray' => []  // 每个订单支付商品的信息
     ];
     foreach ($this->oProducts as $product) {
-      // 获取订单里每个商品支付状态
+      // 获取订单里每个商品支付状态，pStatus是订单里每个商品的状态表示
       $pStatus =
         $this->getProductStatus($product['product_id'], $product['count'], $this->productsDb);
       // 一个商品没有库存的话，订单失效
@@ -225,6 +225,20 @@ class Order
       ->visible(['id', 'name', 'price', 'stock', 'main_img_url'])
       ->toArray();   // 查询到的Collection数据集转成数组
     return $products;
+  }
+
+  // 对外方法：检查订单里的商品库存量是否满足
+  //
+  public function checkOrderStock($orderID){
+    $oProducts = OrderProduct::where('id', $orderID)
+        ->select();
+
+    // 检查库存量的两个参数
+    $this->oProducts = $oProducts;
+    $this->productsDb = $this->getProductsByOrder($this->oProducts);
+
+    $status = $this->getOrderStatus();
+    return $status;
   }
 
   /**

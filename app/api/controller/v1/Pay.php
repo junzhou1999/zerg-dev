@@ -4,6 +4,7 @@ namespace app\api\controller\v1;
 
 use app\api\middleware\CheckExclusiveScope;
 use app\api\validate\IDValidate;
+use app\api\service\Pay as PayService;
 
 class Pay
 {
@@ -14,6 +15,8 @@ class Pay
   public function getPreOrder($id){
     (new IDValidate())->goCheck();
 
+    $pay= new PayService($id);
+    return $pay->pay();
   }
 
 }
