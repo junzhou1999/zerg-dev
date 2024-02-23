@@ -42,8 +42,3 @@ Route::post(':version/order', ':version.Order/placeOrder');
 // 前端展示路由
 Route::get(':version/order/by_user', ':version.Order/getSummaryByUser');
 Route::get(':version/order/:id', ':version.Order/getDetail')->pattern(['id'=>'\d+']);
-
-// 管理员端获取订单列表
-//Route::get(':version/order/paginate', ':version.Order/getSummary');
-// 管理员发货
-//Route::put(':version/order/delivery', ':version.Order/delivery');
