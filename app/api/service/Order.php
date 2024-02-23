@@ -13,12 +13,20 @@ use think\Exception;
 
 class Order
 {
-  protected $oProducts;    // 客户端传进来的商品信息
-  protected $productsDb;   // 根据客户端传来的productID，查询数据库真实的商品信息
+  protected $oProducts;    // 客户端传进来的商品列表
+  protected $productsDb;   // 根据客户端传来的productID，查询数据库真实的商品信息，对oProducts做库存量检查
   protected $uid;          // 用户id
+  protected $addressId;    // 用户下的某个收货地址
 
-  public function place($uid, $oProducts) {
+  /**
+   * @param $uid
+   * @param $oProducts 下单参数
+   * @return array
+   * @throws Exception
+   */
+  public function place($uid, $addressId, $oProducts) {
     $this->uid = $uid;
+    $this->addressId = $addressId;
     $this->oProducts = $oProducts;
     $this->productsDb = $this->getProductsByOrder($this->oProducts);
 
@@ -141,8 +149,8 @@ class Order
       $pStatus =
         $this->getProductStatus($product['product_id'], $product['count'], $this->productsDb);
       // 一个商品没有库存的话，订单失效
-      if (!$pStatus['haveStock'])
-        $status['pass'] = false;
+      if (!$pStatus['haveStock'])  $status['pass'] = false;
+
       $status['order_price'] += $pStatus['totalPrice'];
       $status['totalCount'] += $pStatus['count'];
       // 每个商品的信息
@@ -188,7 +196,7 @@ class Order
       $pStatus['name'] = $product['name'];
       $pStatus['count'] = $oCount;
       $pStatus['totalPrice'] = $product['price'] * $oCount;
-      if ($product['stock'] >= $oCount) $pStatus['haveStock'] = true;
+      if ($product['stock'] >= $oCount)  $pStatus['haveStock'] = true;  // 创建订单时第一次检测库存量
       return $pStatus;
     }
   }
@@ -207,7 +215,7 @@ class Order
     }
     $products = ProductModel::select($oPIDs)
       ->visible(['id', 'name', 'price', 'stock', 'main_img_url'])
-      ->toArray();   // 查询到的模型转成数组
+      ->toArray();   // 查询到的Collection数据集转成数组
     return $products;
   }
 

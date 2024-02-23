@@ -8,6 +8,7 @@ class OrderPlace extends BaseValidate
 {
   /*
   {
+    "addressId": ,
     "products":[{
       "product_id":1,
       "count":1
@@ -19,6 +20,7 @@ class OrderPlace extends BaseValidate
   }
    */
   protected $rule = [
+    'addressId' => 'isPositiveInt',
     'products' => 'checkProducts',
   ];
 

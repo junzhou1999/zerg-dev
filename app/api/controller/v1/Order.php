@@ -17,7 +17,7 @@ class Order
 {
 
   protected $middleware = [
-    CheckExclusiveScope::class => ['only' => ['placeOrder']],
+    CheckExclusiveScope::class => ['only' => ['placeOrder']],  // 管理员不允许访问下单接口
     CheckPrimaryScope::class => ['only' => ['getDetail,getSummaryByUser']],
   ];
 
@@ -28,9 +28,10 @@ class Order
   public function placeOrder() {
     (new OrderPlace())->goCheck();
     $products = input('post.products/a');  // 获取body的所有products
-    $uid = TokenService::getCurrentTokenVar('uid');
+    $addressId = input('post.addressId/d');  // 获取收货地址id
+    $uid = TokenService::getCurrentUid();
     $service = new OrderService();
-    $status = $service->place($uid, $products);
+    $status = $service->place($uid, $addressId, $products);
     return json($status);
   }
 
