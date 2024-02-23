@@ -9,6 +9,7 @@ use app\api\model\UserAddress as UserAddressModel;
 use app\lib\exception\OrderException;
 use app\lib\exception\WechatUserException;
 use think\Exception;
+use think\facade\Db;
 
 class Order
 {
@@ -54,6 +55,7 @@ class Order
    * @throws Exception
    */
   private function createOrder($snap) {
+    Db::startTrans();
     // 数据库操作try，catch
     try {
       $orderNo = $this::makeOrderNo();
@@ -79,12 +81,14 @@ class Order
       $orderProduct = new OrderProduct();
       $orderProduct->saveall($this->oProducts);  // order_product保存order和product的多对多属性
 
+      Db::commit();
       return [
         'order_no' => $orderNo,
         'order_id' => $orderID,
         'create_time' => $create_time
       ];
     } catch (Exception $e) {
+      Db::rollback();
       throw $e;
     }
   }
