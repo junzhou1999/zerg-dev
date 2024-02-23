@@ -2,11 +2,10 @@
 
 namespace app\api\service;
 
-use app\api\model\AppOrder as OrderModel;
+use app\api\model\Order as OrderModel;
 use app\api\model\OrderProduct;
 use app\api\model\Product as ProductModel;
 use app\api\model\UserAddress as UserAddressModel;
-use app\lib\enum\OrderStatusEnum;
 use app\lib\exception\OrderException;
 use app\lib\exception\WechatUserException;
 use think\Exception;
@@ -55,6 +54,7 @@ class Order
    * @throws Exception
    */
   private function createOrder($snap) {
+    // 数据库操作try，catch
     try {
       $orderNo = $this::makeOrderNo();
       $order = new OrderModel();
@@ -65,7 +65,8 @@ class Order
       $order->snap_img = $snap['snapImg'];
       $order->snap_name = $snap['snapName'];
       $order->snap_address = $snap['snapAddress'];
-      $order->snap_items = json_encode($snap['pStatus']);
+      $order->snap_items = json_encode($snap['pStatus']);  // 序列化
+      // 先保存一
       $order->save();   // order表保存这一条订单信息
 
       $orderID = $order->id;
@@ -74,6 +75,7 @@ class Order
       foreach ($this->oProducts as &$p) {
         $p['order_id'] = $orderID;
       }
+      // 再保存多
       $orderProduct = new OrderProduct();
       $orderProduct->saveall($this->oProducts);  // order_product保存order和product的多对多属性
 
@@ -102,11 +104,11 @@ class Order
       'snapImg' => '',    // 订单图片
     ];
 
-    $snap['orderPrice'] = $status['order_price'];
+    $snap['orderPrice'] = $status['orderPrice'];
     $snap['totalCount'] = $status['totalCount'];
     $snap['pStatus'] = $status['pStatusArray'];
     // 数组作为字符串放进表字段，索引查找麻烦/建新表？关系复杂/选择nosql文档性数据库？mongodb
-    $snap['snapAddress'] = json_encode($this->getUserAddress($this->uid));
+    $snap['snapAddress'] = json_encode($this->getUserAddress());
     // 选择第一个商品作为快照的标题，图片
     $snap['snapName'] = $this->productsDb[0]['name'];
     $snap['snapImg'] = $this->productsDb[0]['main_img_url'];
@@ -121,16 +123,18 @@ class Order
   /**
    * 查询用户地址
    */
-  private function getUserAddress($uid) {
-    $userAddress = UserAddressModel::where('user_id', '=', $uid)
-      ->find();
+  private function getUserAddress() {
+    $userAddress = UserAddressModel::where('user_id', $this->uid)
+        ->where('id', $this->addressId)
+        ->find();
     if (!$userAddress) {
       throw new WechatUserException([
         'message' => '用户收获地址不存在，下单失败',
         'status_code' => 60001
       ]);
-      return $userAddress->toArray();
     }
+
+    return $userAddress->toArray();
   }
 
   /**
@@ -140,18 +144,18 @@ class Order
     // 一维数组，计算下单商品的汇总
     $status = [
       'pass' => true,       // 订单总的可支付状态
-      'order_price' => 0,   // 订单总价格
+      'orderPrice' => 0,   // 订单总价格
       'totalCount' => 0,    // 订单总商品数量
       'pStatusArray' => []  // 每个订单支付商品的信息
     ];
     foreach ($this->oProducts as $product) {
-      // 获取每个订单商品支付状态
+      // 获取订单里每个商品支付状态
       $pStatus =
         $this->getProductStatus($product['product_id'], $product['count'], $this->productsDb);
       // 一个商品没有库存的话，订单失效
       if (!$pStatus['haveStock'])  $status['pass'] = false;
 
-      $status['order_price'] += $pStatus['totalPrice'];
+      $status['orderPrice'] += $pStatus['totalPrice'];
       $status['totalCount'] += $pStatus['count'];
       // 每个商品的信息
       array_push($status['pStatusArray'], $pStatus);
@@ -225,32 +229,10 @@ class Order
   public static function makeOrderNo() {
     $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
     $orderSn =
-      $yCode[intval(date('Y')) - 2022] . strtoupper(dechex(date('m'))) . date(
+      $yCode[intval(date('Y')) - 2024] . strtoupper(dechex(date('m'))) . date(
         'd') . substr(time(), -5) . substr(microtime(), 2, 5) . sprintf(
         '%02d', rand(0, 99));
     return $orderSn;
-  }
-
-  // 发货服务
-  public function delivery($orderID, $jumpPage = '')
-  {
-    $order = OrderModel::where('id', $orderID)->find();
-    if (!$order) {
-      throw new OrderException();
-    }
-    if ($order->status != OrderStatusEnum::PAID) {
-      throw new OrderException([
-          'message' => '还没付款呢，想干嘛？或者你已经更新过订单了，不要再刷了',
-          'statusCode' => 80002,
-          'code' => 403
-      ]);
-    }
-    $order->status = OrderStatusEnum::DELIVERED;
-    $order->save();
-//            ->update(['status' => OrderStatusEnum::DELIVERED]);
-//    $message = new DeliveryMessage();
-//    return $message->sendDeliveryMessage($order, $jumpPage);
-    return true;
   }
 
 }
