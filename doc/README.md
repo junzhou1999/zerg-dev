@@ -309,3 +309,6 @@
 ### 完善一对多的用户地址的新增和修改操作
 
 ### 修正下单时的订单状态使得历史快照能读到相关数据
+
+### 加入微信支付SDK
+composer require wechatpay/wechatpay
