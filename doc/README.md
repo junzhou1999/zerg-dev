@@ -324,3 +324,8 @@ composer require wechatpay/wechatpay
   * 图床的位置：config\setting.php
   * 数据库、缓存：config\cache.php
   * 管理员端访问的base_url：js\common.js
+
+### 根据微信SDK说明文档发起预订单支付
+* SDK地址：https://github.com/wechatpay-apiv3/wechatpay-php
+* 测试尚未完成，小程序和微信支付后台好像关联不了，支付的认证和备案很难落实
+* 需要踩坑。。。
