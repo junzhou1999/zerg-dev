@@ -75,9 +75,10 @@ class Address
     $data = $validate->getDataByRule(input('post.')); // 获取输入数据
 
     // 定位地址列
-    $userAddress = UserAddress::where('id', $data["id"])->where('user_id', $uid);
+    $userAddress = $user->address();
 
-    if (!$userAddress) {
+    // 用户下没有地址且没有传id
+    if (!$userAddress && !$data['id']) {
       // 新建
       $userAddress->save($data);
     }
