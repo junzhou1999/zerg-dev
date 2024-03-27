@@ -312,3 +312,15 @@
 
 ### 加入微信支付SDK
 composer require wechatpay/wechatpay
+
+### 修改说明系统的应用配置
+* 本项目的需要手动配置的基本信息：app\api\config\wx.php
+  * 微信登录的app_id,app_secret（用于获取openid）
+  * 以下是微信支付认证的文件
+    * 商家号mchid
+    * 私钥证书位置：apiclient_key.pem的位置
+    * 证书序列号：mch_serial_no
+    * 微信支付平台证书：apiclient_cert的位置
+  * 图床的位置：config\setting.php
+  * 数据库、缓存：config\cache.php
+  * 管理员端访问的base_url：js\common.js

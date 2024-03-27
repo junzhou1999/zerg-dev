@@ -1,5 +1,5 @@
 window.base={
-    g_restUrl:'REST API Base URL',
+    g_restUrl:'REST API Base URL.',
 
     getData:function(params){
         if(!params.type){
