@@ -168,7 +168,7 @@ class Order
   }
 
   /**
-   * 判断订单内每个商品可支付状态
+   * 判断订单内单个商品可支付状态
    * @param $oPID
    * @param $oCount 一个下单商品的数量
    * @param $productsDb  一维关联数组
@@ -178,11 +178,13 @@ class Order
     $pIndex = -1;  // 下单商品在数据库中的索引
     // 匹配到的商品的状态
     $pStatus = [
-      'id' => null,
-      'haveStock' => false,
-      'count' => 0,
-      'name' => '',
-      'totalPrice' => 0
+        'id' => null,
+        'name' => null,
+        'main_img_url'=>null,
+        'count' => $oCount,
+        'totalPrice' => 0,
+        'price' => 0,
+        'haveStock' => false
     ];
 
     // 遍历数据库查到的商品信息，如果订单发起的product_id不存在于前边的结果集，则抛出异常
@@ -203,7 +205,10 @@ class Order
       $pStatus['id'] = $product['id'];
       $pStatus['name'] = $product['name'];
       $pStatus['count'] = $oCount;
+      $pStatus['counts'] = $oCount;
+      $pStatus['price'] = $product['price'];
       $pStatus['totalPrice'] = $product['price'] * $oCount;
+      $pStatus['main_img_url'] =$product['main_img_url'];
       if ($product['stock'] >= $oCount)  $pStatus['haveStock'] = true;  // 创建订单时第一次检测库存量
       return $pStatus;
     }
@@ -228,9 +233,8 @@ class Order
   }
 
   // 对外方法：检查订单里的商品库存量是否满足
-  //
   public function checkOrderStock($orderID){
-    $oProducts = OrderProduct::where('id', $orderID)
+    $oProducts = OrderProduct::where('order_id', $orderID)
         ->select();
 
     // 检查库存量的两个参数
